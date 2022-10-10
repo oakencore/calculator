@@ -10,7 +10,7 @@ body {
     max-width: 400px;
     padding: 0;
     margin: 0;
-    background: linear-gradient(to right, black, darkgray);
+    background: black;
 }
 
 .CalculatorBody {
@@ -21,17 +21,18 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
+    background-color: darkgrey
 }
 
 button {
     height: 60px;
-    background-color: darkgrey;
+    background-color: gray;
     border-radius: 3px;
     border: 1px solid;
-    background-color: transparent;
+    background-color: gray;
     font-size: 2rem;
     color: #333;
-    background-image: linear-gradient(to bottom, transparent, transparent 50%, darkgray);
+    background-image: linear-gradient(to bottom, transparent, transparent 50%, whitesmoke);
 }
 
 .Calculator-Buttons {
