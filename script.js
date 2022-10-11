@@ -91,7 +91,6 @@ function allClear() {
 
 // Similar to allClear except it omits previousNumber and updating the display
 function intermittentClear() {
-  displayValue = [];
   selectedOperand = "";
   previousOperand = "";
   ongoingTotal = [];
