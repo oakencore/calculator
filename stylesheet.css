@@ -7,15 +7,15 @@
 }
 
 body {
-    max-width: 400px;
+    max-width: 500px;
     padding: 0;
     margin: 0;
-    background: black;
+    background: rgb(83, 81, 81);
 }
 
 .CalculatorBody {
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: 6px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -30,22 +30,22 @@ button {
     border-radius: 3px;
     border: 1px solid;
     background-color: gray;
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #333;
     background-image: linear-gradient(to bottom, transparent, transparent 50%, whitesmoke);
 }
 
 .Calculator-Buttons {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
     padding: 20px;
 }
 
 .Calculator-Display {
     width: 100%;
     font-size: 5rem;
-    height: 80px;
+    height: 90px;
     border: 2px white;
     background-color: black;
     color: aliceblue;
@@ -67,6 +67,11 @@ button:hover {
 }
 
 .Data-AllClear {
+    background-color: brown;
+    grid-column: span 2;
+}
+
+.Data-Delete {
     background-color: brown;
     grid-column: span 2;
 }

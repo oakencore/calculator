@@ -1,7 +1,8 @@
-//Create variables for HTML query selectors
+//Grabs all buttons
 const buttons = document.querySelectorAll(
-  ".Data-Number,.Data-Operator,.Data-AllClear,.Data-Equals,.Data-Decimal"
+  ".Data-Number,.Data-Operator,.Data-AllClear,.Data-Equals,.Data-Decimal,.Data-Delete"
 );
+//Grabs the div that will act as the 'display' of the calculator
 const displayPrimary = document.querySelector(".DisplayPrimary");
 
 // variables to store display data
@@ -15,12 +16,23 @@ let operandCounter = 0;
 let decimalCounter = 0;
 
 // FUNCTIONS
-function numbers(number) {
-  displayValue += number;
+function del() {
+  displayValue = displayValue.slice(0, -1);
   displayPrimary.textContent = displayValue;
 }
 
+function numbers(number) {
+  // Limits the numbers to stop them 'falling off' the display.
+  if (displayValue.length !== 10) {
+    displayValue += number;
+    displayPrimary.textContent = displayValue;
+  } else {
+    displayPrimary.textContent = displayValue;
+  }
+}
+
 function decimal(decimal) {
+  // Limits the amounts of decimals on the display to one.
   if (decimalCounter >= 1) displayPrimary.textContent = displayValue;
   else {
     displayValue += decimal;
@@ -30,6 +42,7 @@ function decimal(decimal) {
 }
 
 function operand(operand) {
+  // If no previous operands have been selected and there is no ongoing total do this:
   if (operandCounter == 0 && ongoingTotal.length === 0) {
     operandCounter++;
     selectedOperand = buttonValue;
@@ -76,6 +89,7 @@ function allClear() {
   displayPrimary.textContent = displayValue;
 }
 
+// Similar to allClear except it omits previousNumber and updating the display
 function intermittentClear() {
   displayValue = [];
   selectedOperand = "";
@@ -105,23 +119,19 @@ const operate = function (number1, number2, operator) {
 };
 
 function equals() {
+  // If equals is only pressed once do this: 
   if (operandCounter === 0) {
-    console.log("first statement hit");
     displayPrimary.textContent = displayValue;
+  // If the user tries to divide by 0 do this:
   } else if (displayValue == 0 && selectedOperand == "/") {
-    console.log("second statement hit");
     displayPrimary.textContent = "#DIV/0!";
-    //intermittentClear()
   } else if (operandCounter == 0 || ongoingTotal.length === 0) {
-    console.log("third statement hit");
     operateResult =
       Math.round(
         operate(firstNumber, displayValue, selectedOperand) * 10000000
       ) / 10000000;
     displayPrimary.textContent = operateResult;
-    //intermittentClear()
   } else {
-    console.log("fourth statement hit");
     firstNumber = displayValue;
     previousNumber = ongoingTotal;
     operateResult =
@@ -129,7 +139,6 @@ function equals() {
         operate(previousNumber, firstNumber, selectedOperand) * 10000000
       ) / 10000000;
     displayPrimary.textContent = operateResult;
-    //intermittentClear()
   }
   intermittentClear();
 }
@@ -162,6 +171,15 @@ buttons.forEach((button) => {
   });
 });
 
+// Delete button event listener
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if ((buttonValue = button.getAttribute("data-delete"))) {
+      del();
+    }
+  });
+});
+
 // OPERAND event listener
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -180,7 +198,62 @@ buttons.forEach((button) => {
   });
 });
 
-//TODO: Keyboard support
-document.addEventListener("keypress", (event) => {
-  numbers(event.key);
+//Keyboard Support
+//TODO: Combine all event listeners into a single function. Something similar to:
+// document.addEventListener("keydown", function (e) {
+//   const buttonEventSelectors = document.querySelectorAll(
+//     `button[data-num="${e.key}"]`,
+//     `button[data-op="${e.key}"]`,
+//     `button[data-equals="${e.key}"]`,
+//     `data-allClear="${e.key}"]`,
+//     `button[data-decimal="${e.key}"]`
+//   );
+//   buttonEventSelectors.forEach((e) => {
+//     e.addEventListener("keydown", (e) => {
+//       if (!e) {
+//         return;
+//       }
+//       button.click();
+//     });
+//   });
+// });
+
+document.addEventListener("keydown", function (e) {
+  let button = document.querySelector(`button[data-num="${e.key}"]`);
+  if (!button) return; // Halts function if a non accepted button is pressed
+  button.click();
+});
+
+document.addEventListener("keydown", function (e) {
+  let button = document.querySelector(`button[data-op="${e.key}"]`);
+  if (!button) return; // Halts function if a non accepted button is pressed
+  button.click();
+});
+
+document.addEventListener("keydown", function (e) {
+  let button = document.querySelector(`button[data-equals="${e.key}"]`);
+  if (!button) return; // Halts function if a non accepted button is pressed
+  button.click();
+});
+
+//Alternative equals key handler
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") equals();
+});
+
+document.addEventListener("keydown", function (e) {
+  let button = document.querySelector(`button[data-allClear="${e.key}"]`);
+  if (!button) return; // Halts function if a non accepted button is pressed
+  button.click();
+});
+
+document.addEventListener("keydown", function (e) {
+  let button = document.querySelector(`button[data-decimal="${e.key}"]`);
+  if (!button) return; // Halts function if a non accepted button is pressed
+  button.click();
+});
+
+// Backspace handler
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Backspace") del();
 });
