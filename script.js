@@ -17,9 +17,14 @@ let decimalCounter = 0;
 
 // FUNCTIONS
 function del() {
-  displayValue = displayValue.slice(0, -1);
-  displayPrimary.textContent = displayValue;
-}
+  if (displayValue.at(-1) == ".") {
+    displayValue = displayValue.slice(0, -1);
+    displayPrimary.textContent = displayValue;
+    decimalCounter = 0;
+  }
+    displayValue = displayValue.slice(0, -1);
+    displayPrimary.textContent = displayValue;
+  }
 
 function numbers(number) {
   // Limits the numbers to stop them 'falling off' the display.
