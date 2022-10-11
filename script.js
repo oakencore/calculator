@@ -129,6 +129,7 @@ function equals() {
       Math.round(
         operate(firstNumber, displayValue, selectedOperand) * 10000000
       ) / 10000000;
+    displayValue = operateResult
     displayPrimary.textContent = operateResult;
   } else {
     firstNumber = displayValue;
@@ -137,6 +138,7 @@ function equals() {
       Math.round(
         operate(previousNumber, firstNumber, selectedOperand) * 10000000
       ) / 10000000;
+    displayValue = operateResult
     displayPrimary.textContent = operateResult;
   }
   intermittentClear();
